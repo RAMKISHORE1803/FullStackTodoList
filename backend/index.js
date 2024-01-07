@@ -115,10 +115,36 @@ app.post("/register", async (req, res) => {
 });
 
 // Add login route
-app.post("/login", passport.authenticate("local"), (req, res) => {
-  res.json({
-    msg: "Login successful",
-  });
+app.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      console.log(err);
+      return next(err);
+    }
+
+    if (!user) {
+      let errorMessage = "Invalid username or password";
+      console.log(errorMessage);
+      if (info && info.message) {
+        errorMessage = info.message;
+      }
+
+      return res.status(401).json({
+        msg: errorMessage,
+      });
+    }
+
+    req.logIn(user, (err) => {
+      if (err) {
+        console.log(err);
+        return next(err);
+      }
+      console.log("Login successful");
+      return res.json({
+        msg: "Login successful",
+      });
+    });
+  })(req, res, next);
 });
 
 // Add logout route

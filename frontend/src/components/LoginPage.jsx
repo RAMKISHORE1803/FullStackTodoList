@@ -21,6 +21,8 @@ const LoginPage = () => {
         setIsAuthenticated(true);
       }
     } catch (error) {
+      // Show an alert for network or server errors
+      alert("Please verify your credentials");
       console.error("Login failed", error);
     }
   }
