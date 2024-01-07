@@ -99,8 +99,8 @@ app.put("/completed", async (req, res) => {
 // Add user registration route
 app.post("/register", async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const user = await User.register(new User({ username }), password);
+    const { name, username, password } = req.body;
+    const user = await User.register(new User({ name, username }), password);
 
     res.json({
       msg: "User registered successfully",
@@ -109,6 +109,7 @@ app.post("/register", async (req, res) => {
     console.error(error);
     res.status(500).json({
       msg: "Registration failed",
+      error: error,
     });
   }
 });
