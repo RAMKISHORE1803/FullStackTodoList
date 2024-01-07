@@ -1,11 +1,14 @@
+// LoginPage.js
 import React, { useRef, useState } from "react";
 import axios from "axios";
 import TodosPage from "./TodosPage";
+import { useNavigate } from "react-router-dom";
 
-const LoginForm = () => {
+const LoginPage = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
 
   async function handleLogin() {
     try {
@@ -22,12 +25,17 @@ const LoginForm = () => {
     }
   }
 
+  function handleClick() {
+    // Use navigate to navigate to the signup page
+    navigate("/signup");
+  }
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white font-sans">
       {isAuthenticated ? (
         <TodosPage />
       ) : (
-        <div className="bg-gray-800 p-11 rounded-full shadow-md w-96">
+        <div className="bg-gray-800 p-11 rounded-3xl shadow-md w-96">
           <h2 className="text-3xl font-extrabold mb-6">Login</h2>
           <div className="mb-6">
             <label htmlFor="email" className="text-gray-300">
@@ -57,10 +65,20 @@ const LoginForm = () => {
           >
             Submit
           </button>
+          <p
+            onClick={handleClick}
+            className="mt-4 text-gray-300 text-center font-ui-serif font-thin  "
+          >
+            Not registered?{" "}
+            <span className="cursor-pointer text-blue-500">
+              Create an account
+            </span>
+            .
+          </p>
         </div>
       )}
     </div>
   );
 };
 
-export default LoginForm;
+export default LoginPage;

@@ -11,6 +11,7 @@ const todoSchema = mongoose.Schema({
 const todo = mongoose.model("todos", todoSchema);
 
 const userSchema = new mongoose.Schema({
+  name: String,
   username: String, // Example field: username
   password: String, // Example field: password
   // Add other fields as needed for your application
