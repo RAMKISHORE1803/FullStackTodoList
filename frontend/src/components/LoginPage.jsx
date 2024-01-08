@@ -35,7 +35,7 @@ const LoginPage = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white font-sans">
       {isAuthenticated ? (
-        <TodosPage />
+        navigate("/todos")
       ) : (
         <div className="bg-gray-800 p-11 rounded-3xl shadow-md w-96">
           <h2 className="text-3xl font-extrabold mb-6">Login</h2>
