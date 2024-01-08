@@ -16,7 +16,7 @@ app.use(cors());
 // Set up sessions and passport
 app.use(
   session({
-    secret: "your-secret-key", // Change this to a secure key
+    secret: "your-secret-key",
     resave: false,
     saveUninitialized: false,
   })
@@ -26,8 +26,19 @@ app.use(passport.session());
 
 // Passport local strategy for user authentication
 passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.serializeUser(function (user, cb) {
+  cb(null, user.id);
+});
+
+passport.deserializeUser(function (id, cb) {
+  // Fetch user from the database using the id
+  User.findById(id, function (err, user) {
+    if (err) {
+      return cb(err);
+    }
+    cb(null, user);
+  });
+});
 
 // Your existing routes...
 app.post("/todo", async (req, res) => {
